@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .test::selection {
+        background-color: blueviolet;
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <span class="test">123</span>
+    <script>
+      // const obj1 = {
+      //   name: "pdy",
+      // };
+      // const say = function (a, b, c) {
+      //   console.log(this);
+      //   console.log(a, b, c);
+      //   console.log(this.name + "shuaib" + a + b + c);
+      //   return "1ss";
+      // };
+      // say.prototype.hello = function () {
+      //   console.log(this);
+      //   console.log("hello");
+      // };
+
+      // Function.prototype.myCall = function (_this, ...args) {
+      //   _this = _this || window;
+      //   _this.fn = this;
+      //   let res = _this.fn(...args);
+      //   delete _this.fn;
+      //   return res;
+      // };
+      // Function.prototype.myApply = function (_this, ...args) {
+      //   _this = _this || window;
+      //   if (args.length > 1 || !Array.isArray(args[0])) {
+      //     throw new Error("you need just input a array");
+      //   }
+      //   _this.fn = this;
+      //   let res = _this.fn(...args[0]);
+      //   delete _this.fn;
+      //   return res;
+      // };
+      // Function.prototype.myBind = function (_this, ...args) {
+      //   let fn = this;
+      //   return function newFn(..._args) {
+      //     // new 调用情况
+      //     if (this instanceof newFn) {
+      //       return new fn(...args, ..._args);
+      //     }
+      //     return fn.apply(_this, [...args, ..._args]);
+      //   };
+      // };
+      // const b = say.bind(obj1, "a", "b");
+      // const a = say.myBind(obj1, "a", "b");
+      // const _b = new b();
+      // _b.hello();
+      // const _a = new a();
+      // _a.hello();
+
+      // function myNew(constructor, ...args) {
+      //   let obj = {};
+      //   obj.__proto__ = constructor.prototype;
+      //   let res = constructor.apply(obj, args);
+      //   return res instanceof Object ? res : obj;
+      // }
+
+      // function myInstanceOf(left, right) {
+      //   while (true) {
+      //     if (left.__proto__ === null) return false;
+      //     if (left.__proto__ === right.prototype) {
+      //       return true;
+      //     }
+      //     left = left.__proto__;
+      //   }
+      //   return false;
+      //   // }
+      //   function instanceOf(left, right) {
+      //     let proto = left.__proto__;
+      //     while (true) {
+      //       if (proto === null) return false;
+      //       if (proto === right.prototype) {
+      //         return true;
+      //       }
+      //       proto = proto.__proto__;
+      //     }
+      //   }
+
+      //   let a = 1;
+      //   console.log(Number.__proto__);
+      //   console.log(instanceOf(a, Object));
+      //   // console.log(a instanceof Object);
+      function test(line) {
+        const stone = line.split(" ");
+        if (stone.length <= 2 && stone[1] - stone[0] !== 1) console.log(false);
+        let speed = 1;
+        let res = true;
+        for (let i = 2; i < stone.length; i++) {
+          if (
+            stone[i] - stone[i - 1] > speed + 1 ||
+            stone[i] - stone[i - 1] < speed - 1
+          ) {
+            console.log(stone[i], stone[i - 1]);
+            res = false;
+            break;
+          }
+          speed = stone[i] - stone[i - 1];
+        }
+        console.log(res);
+      }
+      test2("0 1 3 5 6 8 12 17");
+      //
+    </script>
+  </body>
+</html>

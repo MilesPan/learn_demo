@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /**
+       * @param {string} s
+       * @return {string[]}
+       */
+      var permutation = function (s) {
+        let res = [];
+        let strs = s.split("");
+        let len = strs.length;
+        let isVisted = Array.from(len).fill(false);
+        const backtrack = (path) => {
+          // 2.收集成功的情况
+          if (path.length === len) {
+            res.push(path.join(""));
+            return;
+          }
+          // 1，递归执行,如果路径里已经存在了元素，说明这个路径不符合了，就回溯。否则就递归下去
+          strs.forEach((str, i) => {
+            if (isVisted[i]) {
+              return;
+            }
+            isVisted[i] = true;
+            // concat不会改变path，而是返回一个拼接后的新数组
+            backtrack(path.concat(str));
+            isVisted[i] = false;
+          });
+        };
+        backtrack([]);
+        return [...new Set(res)];
+
+        // let len = s.length;
+        // let isVisted = Array.from(len).fill(false);
+        // let res = [];
+        // let dfs = (path) => {
+        //   if (path.length === s.length) {
+        //     res.push(path);
+        //     return;
+        //   }
+        //   for (let i = 0; i < s.length; i++) {
+        //     if (isVisted[i]) {
+        //       continue;
+        //     }
+        //     isVisted[i] = true;
+        //     dfs(path + s[i]);
+        //     isVisted[i] = false;
+        //   }
+        // };
+        // dfs([]);
+        // return [...new Set(res)];
+      };
+      console.log(permutation("aab"));
+    </script>
+  </body>
+</html>

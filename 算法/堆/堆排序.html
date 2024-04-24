@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script type="module">
+      import MinHeap from "./MinHeap.js";
+      function heapSort(arr) {
+        const h = new MinHeap();
+        for (let i = 0; i < arr.length; i++) {
+          h.insert(arr[i]);
+        }
+        return h.sort();
+      }
+      class KthLargest {
+        constructor(arr) {
+          [this.k, this.arr] = arr;
+          this.heap = new MinHeap();
+          this.init();
+        }
+        init() {
+          this.arr.forEach((i) => {
+            this.limitInsert(i);
+          });
+        }
+        limitInsert(val) {
+          this.heap.insert(val);
+          if (this.heap.size() > this.k) {
+            this.heap.pop();
+          }
+        }
+        add(v) {
+          this.limitInsert(v);
+          return this.heap.peek();
+        }
+      }
+      const kthLargest = new KthLargest([3, [4, 5, 8, 2]]);
+      console.log(kthLargest.add(3));
+      console.log(kthLargest.add(5));
+      console.log(kthLargest.add(10));
+      console.log(kthLargest.add(9));
+      console.log(kthLargest.add(4));
+    </script>
+  </body>
+</html>

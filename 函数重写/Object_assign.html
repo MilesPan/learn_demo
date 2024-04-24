@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      Object.myAssign = function (target, ...source) {
+        if (!target) {
+          throw new TypeError("Cannot convert undefined or null to object");
+        }
+        source.forEach((obj) => {
+          for (let key in obj) {
+            target[key] = obj[key];
+          }
+        });
+        return target;
+      };
+      Object.assign2 = function (target, ...source) {
+        if (target == null) {
+          throw new TypeError("Cannot convert undefined or null to object");
+        }
+        let ret = Object(target);
+        source.forEach(function (obj) {
+          if (obj != null) {
+            for (let key in obj) {
+              if (obj.hasOwnProperty(key)) {
+                ret[key] = obj[key];
+              }
+            }
+          }
+        });
+        return ret;
+      };
+      let target = {
+        a: 1,
+        b: 2,
+      };
+      let obj1 = {
+        b: 5,
+        c: 3,
+        d: 4,
+      };
+      let obj2 = {
+        a: 3,
+        b: 3,
+        c: 4,
+      };
+      //   console.log(Object.assign(target, obj1, obj2), target);
+      console.log(Object.myAssign(target, obj1, obj2), target);
+    </script>
+  </body>
+</html>

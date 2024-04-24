@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 1.递归模拟出所有情况
+      //   2.剪枝，如果是不符合的情况，就回溯(不再递归下去)
+      //   3.收集所有到达递归终点的情况
+        let allPermutation = (nums) => {
+          let res = [];
+          let isVisted = Array.from(nums.length).fill(false);
+          let dfs = (path) => {
+            if (path.length === nums.length) {
+              res.push(path);
+              return;
+            }
+            for (let i = 0; i < nums.length; i++) {
+              if (isVisted[i]) continue;
+              isVisted[i] = true;
+              dfs(path.concat(nums[i]));
+              isVisted[i] = false;
+            }
+          };
+          dfs([]);
+          return res;
+        };
+        console.log(allPermutation([1, 4, 6]));
+    </script>
+  </body>
+</html>

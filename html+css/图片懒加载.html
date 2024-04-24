@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .img {
+        position: relative;
+        top: 1000px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="img">
+      <img src="" data-src="./bgc.jpg" alt="" />
+    </div>
+    123
+    <script>
+      let imgEl = document.querySelector("img");
+      let lazyLoad = function () {
+        let rect = imgEl.getBoundingClientRect();
+        if (rect.top < document.documentElement.clientHeight) {
+          imgEl.src = imgEl.dataset.src;
+        }
+      };
+      document.addEventListener("scroll", lazyLoad);
+    </script>
+  </body>
+</html>

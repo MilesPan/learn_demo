@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      //   寄生组合继承
+      //   function myCreateObject(obj) {
+      //     function newFn() {}
+      //     newFn.prototype = obj;
+      //     return new newFn();
+      //   }
+      //   function Parent(name) {
+      //     this.name = name;
+      //     this.hobbies = ["sing", "dance", "rap"];
+      //   }
+      //   function Child(name) {
+      //     //1. 只用call的话无法继承Paren原型上的属性和方法
+      //     Parent.call(this, name);
+      //     this.age = 18;
+      //   }
+      //   /** 2.
+      //    * Object.create(obj),表示创建一个继承obj的对象
+      //    * 相当于创建一个中间跳板对象，用于解决引用类型问题
+      //    */
+      //   Child.prototype = Object.create(Parent.prototype);
+
+      //   // Child.prototype.constructor 应该是指向自身
+      //   // 而Object.create创建的对象并没有constructor,因此会通过原型链查找，
+      //   // 而该child.__proto__ === parent.prototype
+      //   // parent.prototype.constructor === parent本身
+      //   // 所以说我们需要重新给Child.prototype.constructor赋值一下，让其等于自身
+      //   Child.prototype.constructor = Child;
+
+      //   const child1 = new Child("child1");
+      //   const child2 = new Child("child2");
+      //   console.log(child1);
+      //   console.log(child2);
+      //   child1.hobbies.push("dhahd");
+      //   console.log(child1);
+      //   console.log(child2);
+
+      //原型链继承
+      //问题:1.父类的属性在所有子类实例中是共享的，一个修改，全变
+      //   2.子类不能给父类传参
+      // function Animal() {
+      //   this.name = "pig";
+      //   this.age = 18;
+      // }
+      // Animal.prototype.getName = () => {
+      //   return this.name;
+      // };
+      // function Dog() {
+      //   this.name = "dog";
+      // }
+      // Dog.prototype = new Animal();
+      // let dog = new Dog();
+
+      //构造函数继承
+      //   问题:1.所有要继承的属性方法必须定义在构造函数内，这会导致每个子类实例都会创建一遍方法。因为方法其实只要公用就行了，没必要分隔开
+      //   function Animal(param) {
+      //     this.name = "pig";
+      //     this.age = 18;
+      //     this.param = param;
+      //   }
+      //   Animal.prototype.getName = () => {
+      //     return this.name;
+      //   };
+      //   Animal.prototype.price = 19;
+      //   function Dog() {
+      //     this.name = "dog";
+      //     Animal.call(this, "123");
+      //   }
+      //   let dog = new Dog();
+      //   console.log(dog.age);
+      //   //   无法获取父类原型上的属性方法
+      //   console.log(dog.getName);
+      //   console.log(dog.price);
+
+      //   组合继承
+      //   问题：1.父类的属性继承了两次
+      //   function Animal(param) {
+      //     this.name = "pig";
+      //     this.age = 18;
+      //     this.param = param;
+      //   }
+      //   Animal.prototype.getName = function () {
+      //     return this.name;
+      //   };
+      //   Animal.prototype.price = 19;
+      //   function Dog() {
+      //     this.name = "dog";
+      //     Animal.call(this, "123");
+      //   }
+      //   Dog.prototype = new Animal();
+      //   Dog.prototype.constructor = Dog;
+      //   let dog = new Dog();
+      //   console.log(dog.age);
+      //   //   无法获取父类原型上的属性方法
+      //   console.log(dog.getName());
+      //   console.log(dog.price);
+
+      //   寄生式组合继承
+      //   不直接调用父类构造函数给子类原型赋值，而是通过创建空函数 F 获取父类原型的副本
+      // function Animal(param) {
+      //   this.name = "pig";
+      //   this.age = 18;
+      //   this.param = param;
+      // }
+      // Animal.prototype.getName = function () {
+      //   return this.name;
+      // };
+      // Animal.prototype.price = 19;
+      // function Dog() {
+      //   this.name = "dog";
+      // }
+      // //   中间层对象
+      // let middleBoard = Object.create(new Animal());
+      // Dog.prototype = middleBoard;
+      // Dog.prototype.constructor = Dog;
+      // let dog = new Dog();
+      // console.log(dog.age);
+      // //   无法获取父类原型上的属性方法
+      // console.log(dog.getName());
+      // console.log(dog.price);
+
+      //   Class继承
+      //   class Animal {
+      //     constructor(param) {
+      //       this.name = "pig";
+      //       this.param = param;
+      //       this.age = 18;
+      //     }
+      //     getName() {
+      //       return this.name;
+      //     }
+      //   }
+      //   class Dog extends Animal {
+      //     constructor() {
+      //       super();
+      //       this.name = "dog";
+      //     }
+      //   }
+    </script>
+  </body>
+</html>

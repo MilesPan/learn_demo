@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 1秒时打印1 2秒时打印2 3秒时打印3 ·····
+      const array = [1, 2, 3, 4];
+      //   (function () {
+      //     array.forEach(async (element) => {
+      //       const result = await new Promise((res) => {
+      //         setTimeout(() => res(element), element * 1000);
+      //       });
+      //       console.log(result);
+      //     });
+      //   })();
+
+      //   1秒时打印1 间隔两秒打印2，再间隔三秒打印3 ····
+      (async function () {
+        for (let i = 0; i < array.length; i++) {
+          const result = await new Promise((res) => {
+            setTimeout(() => res(array[i]), array[i] * 1000);
+          });
+          console.log(result);
+        }
+      })();
+    </script>
+  </body>
+</html>

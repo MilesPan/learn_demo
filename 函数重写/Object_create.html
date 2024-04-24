@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      Object.myCreate = function (proto, propertiesObject) {
+        if (typeof proto !== "object" && typeof proto !== "function") {
+          throw new Error("第一个参数必须是一个对象");
+        }
+        if (propertiesObject === null) {
+          new TypeError("Cannot convert undefined or null to object");
+        }
+        // 跳板函数
+        function F() {}
+        F.prototype = proto;
+        const obj = new F();
+        if (propertiesObject != undefined) {
+          Object.defineProperties(obj, propertiesObject);
+        }
+        // 创建一个没有原型的对象
+        if (proto === null) {
+          obj.__proto__ = null;
+        }
+        return obj;
+      };
+      const obj1 = Object.create({ a: 1, b: 2 });
+      const obj2 = Object.myCreate({ a: 1, b: 2 });
+      console.log(obj1.a);
+      console.log(obj1.__proto__.constructor);
+      console.log(obj2.a);
+      console.log(obj2.__proto__.constructor);
+    </script>
+  </body>
+</html>

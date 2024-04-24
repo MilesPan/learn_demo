@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- 读 -->
+    <input title="123" type="file" onchange="read(this)" />
+    <!-- 写 -->
+    <input type="button" id="savetext" value="Save" onclick="Save()" />
+    <script>
+      let content = "";
+      function read(obj) {
+        var files = obj.files;
+        var reader = new FileReader(); //新建一个FileReader
+        reader.readAsText(files[0], "UTF-8"); //读取文件
+        reader.onload = function (evt) {
+          //读取完文件之后会回来这里
+          var fileString = evt.target.result; // 读取文件内容
+          content = fileString;
+        };
+      }
+      function doSave(value, type, name) {
+        console.log(value);
+        var blob;
+        if (typeof window.Blob == "function") {
+          blob = new Blob([value], { type: type });
+        } else {
+          var BlobBuilder =
+            window.BlobBuilder ||
+            window.MozBlobBuilder ||
+            window.WebKitBlobBuilder ||
+            window.MSBlobBuilder;
+          var bb = new BlobBuilder();
+          bb.append(value);
+          blob = bb.getBlob(type);
+        }
+        var URL = window.URL || window.webkitURL;
+        console.log(URL);
+        var bloburl = URL.createObjectURL(blob);
+        var anchor = document.createElement("a");
+        if ("download" in anchor) {
+          anchor.style.visibility = "hidden";
+          anchor.href = bloburl;
+          anchor.download = name;
+          document.body.appendChild(anchor);
+          var evt = document.createEvent("MouseEvents");
+          evt.initEvent("click", true, true);
+          anchor.dispatchEvent(evt);
+          document.body.removeChild(anchor);
+        } else if (navigator.msSaveBlob) {
+          navigator.msSaveBlob(blob, name);
+        } else {
+          location.href = bloburl;
+        }
+      }
+      function generatorContent(cnt) {
+        return cnt;
+      }
+      function Save() {
+        doSave(generatorContent(content), "text/latex", "hello.in2");
+      }
+    </script>
+  </body>
+</html>

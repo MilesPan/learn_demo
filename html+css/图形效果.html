@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style type="text/css">
+      #regular-triangle {
+        width: 0;
+        height: 0;
+        border-left: 50px solid blue;
+        border-top: 20px solid yellow;
+        border-right: 50px solid red;
+        border-bottom: 100px solid #4c98f7;
+      }
+      #diamond {
+        width: 0;
+        height: 0;
+        border: 100px solid transparent;
+        border-bottom-color: #4c98f7;
+        position: relative;
+        top: -100px;
+      }
+      #diamond:after {
+        content: "";
+        position: absolute;
+        left: -100px;
+        top: 100px;
+        width: 0;
+        height: 0;
+        border: 100px solid transparent;
+        border-top-color: #4c98f7;
+      }
+      #message-box {
+        margin: 0 20px;
+        width: 120px;
+        height: 80px;
+        background: #4c98f7;
+        position: relative;
+        border-radius: 10px;
+      }
+      #message-box:before {
+        content: "";
+        position: absolute;
+        right: 100%;
+        top: 26px;
+        width: 0;
+        height: 0;
+        border-top: 13px solid transparent;
+        border-right: 26px solid #4c98f7;
+        border-bottom: 13px solid transparent;
+      }
+      #five-pointed-star {
+        margin: 100px 0 50px 0;
+        position: relative;
+        width: 0px;
+        height: 0px;
+        border-right: 100px solid transparent;
+        border-bottom: 70px solid #4c98f7;
+        border-left: 100px solid transparent;
+        transform: rotate(35deg);
+      }
+      #five-pointed-star:before {
+        content: "";
+        position: absolute;
+        height: 0;
+        width: 0;
+        top: -45px;
+        left: -65px;
+        border-bottom: 80px solid #4c98f7;
+        border-left: 30px solid transparent;
+        border-right: 30px solid transparent;
+        transform: rotate(-35deg);
+      }
+      #five-pointed-star:after {
+        content: "";
+        position: absolute;
+        top: 3px;
+        left: -105px;
+        width: 0px;
+        height: 0px;
+        border-right: 100px solid transparent;
+        border-bottom: 70px solid #4c98f7;
+        border-left: 100px solid transparent;
+        transform: rotate(-70deg);
+      }
+      #heart-shaped {
+        position: relative;
+        width: 100px;
+        height: 90px;
+      }
+      #heart-shaped:before,
+      #heart-shaped:after {
+        content: "";
+        position: absolute;
+        left: 50px;
+        top: 0;
+        width: 50px;
+        height: 80px;
+        background: #4c98f7;
+        border-radius: 50px 50px 0 0;
+        transform: rotate(-45deg);
+        transform-origin: 0 100%;
+      }
+      #heart-shaped:after {
+        left: 0;
+        transform: rotate(45deg);
+        transform-origin: 100% 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <section>
+      <div id="regular-triangle"></div>
+    </section>
+    <section>
+      <div id="diamond"></div>
+    </section>
+    <section>
+      <div id="hexagons"></div>
+    </section>
+    <section>
+      <div id="message-box"></div>
+    </section>
+    <section>
+      <div id="five-pointed-star"></div>
+    </section>
+    <section>
+      <div id="heart-shaped"></div>
+    </section>
+  </body>
+</html>

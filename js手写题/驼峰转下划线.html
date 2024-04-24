@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function convert1(str) {
+        let res = "";
+        for (let ch of str) {
+          const charCode = ch.charCodeAt();
+          if (charCode >= 65 && charCode <= 90) {
+            res += "_" + ch.toLowerCase();
+          } else {
+            res += ch;
+          }
+        }
+        return res;
+      }
+      function convert1(str) {
+        return str.replace(/[A-Z]/g, function (all, letter) {
+          return "_" + str[letter].toLowerCase();
+        });
+      }
+      console.log(convert1("camelDataCome"));
+    </script>
+  </body>
+</html>

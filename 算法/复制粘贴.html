@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 小明最近学会了快捷键Ctrl C、Ctrl V。具体来说，给她一个字符串，她复制其中的一个字符并将其粘贴到这个字符的下一位，从而整个字符串的长度加一。小树来检测她的学习成果。他给出两个字符串 s、t，小明可以对 s 进行任意次复制粘贴操作，请问她能否将 s 转化成 t？
+      function solution(temp) {
+        const nums = temp.shift();
+        const strs = new Array(nums).fill("");
+        function convert(strs) {
+          // 原字符串
+          let s = strs[0];
+          // 转换后字符串
+          let t = strs[1];
+
+          if (s.length > t.length) return "NO";
+          if (s.length === t.length) return s === t ? "YES" : "NO";
+          let lastChar = t[0];
+          let sIndex = 0;
+          for (let i = 0; i < t.length; i++) {
+            console.log(sIndex);
+            if (s[sIndex] && t[i] === s[sIndex]) {
+              lastChar = s[sIndex];
+              sIndex++;
+              continue;
+            } else {
+              if (t[i] === lastChar) {
+                continue;
+              } else {
+                console.log(t[i], s[i]);
+                return "NO";
+              }
+            }
+          }
+          return "YES";
+        }
+        for (let i = 0; i < +nums; i++) {
+          strs[i] = [temp[i * 2], temp[i * 2 + 1]];
+        }
+        console.log(strs);
+        return strs.map((item, index) => {
+          return convert(item);
+        });
+      }
+      console.log(
+        solution([
+          "1",
+          "h",
+          "d",
+          //   "hello",
+          //   "helloo",
+          //   "hello",
+          //   "hlllloo",
+          //   "hello",
+          //   "helo",
+        ])
+      );
+    </script>
+  </body>
+</html>

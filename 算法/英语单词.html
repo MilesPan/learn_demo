@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!--    小A的英语考了个不及格，老师很生气，并且发现他英语的语法几乎全错！于是老师决定好好教教他英语语法。
+
+   老师想先从句子结构开始教他。一个句子至少需要包含主谓结构，即主语和谓语，并且主语在前，谓语在后。有些句子会在谓语后面加上宾语。避免复杂，本题中句子的顺序严格按照主语-谓语-宾语的顺序（即无宾语前置和倒装等情况）。
+
+   老师给了小A三张单词表，分别是主语单词表、谓语单词表和宾语单词表。老师要让小A用这些单词表中的单词来造句，并且规定：谓语有且仅有一个单词，主语和宾语可以包含任意个单词（主语不可为空）。老师暂时不想让小A造出能保证意思通顺的句子，他只想让小A能够学会基本的句子结构就行。
+
+   现在，小A根据这些单词造了m条句子，现在假设你是老师，你需要判断每条句子是否符合上述句子结构。 -->
+    <script>
+      const temp = [
+        "3 3 3",
+        "i you he",
+        "am is are",
+        "yours his hers",
+        "5",
+        "i am yours",
+        "you is his",
+        "i",
+        "i am am yours",
+        "is his",
+      ];
+      function generateMap(arr) {
+        const map = new Map();
+        arr.forEach((item, index) => {
+          map.set(item, index);
+        });
+        return map;
+      }
+      const [zhuN, weiN, bingN] = temp[0].split(" ");
+      const zhu = temp[1].split(" ");
+      const wei = temp[2].split(" ");
+      const bing = temp[3].split(" ");
+      const zhuMap = generateMap(zhu);
+      const weiMap = generateMap(wei);
+      const bingMap = generateMap(bing);
+      const pNums = temp[4];
+      const p = [];
+      for (let i = 5; i < temp.length; i++) {
+        p.push(temp[i].split(" "));
+      }
+      function convert(p) {
+        let lastWordType = "";
+        for (let i = 0; i < p.length; i++) {
+          //   console.log(p[i], lastWordType);
+          const curWord = p[i];
+          if (lastWordType === "") {
+            if (zhuMap.has(curWord)) {
+              lastWordType = "zhu";
+              continue;
+            } else {
+              return "NO";
+            }
+          }
+          if (lastWordType === "zhu") {
+            if (weiMap.has(curWord)) {
+              lastWordType = "wei";
+              continue;
+            } else if (zhuMap.has(curWord)) {
+              continue;
+            } else {
+              return "NO";
+            }
+          }
+          if (lastWordType === "wei" || lastWordType === "bing") {
+            if (bingMap.has(curWord)) {
+              lastWordType = "bing";
+              continue;
+            } else {
+              return "NO";
+            }
+          }
+        }
+        return lastWordType !== "zhu" ? "YES" : "NO";
+      }
+      function solution(pArr) {
+        return pArr.map((item) => {
+          return convert(item);
+        });
+      }
+      console.log(solution(p));
+    </script>
+  </body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let arr = [1, 2, 3, 4, 5];
+      Array.prototype.myForEach = function (cb, _this = undefined) {
+        if (!this) {
+          throw new Error("this is null or not defined");
+        }
+        if (typeof cb !== "function") {
+          throw new Error(cb + " is not a funciton");
+        }
+        let arr = this;
+        let len = arr.length;
+        let k = 0;
+        while (k < len) {
+          cb.call(_this, this[k], k, arr);
+          k++;
+        }
+      };
+      // arr.myForEach((it, i, arr) => {
+      //   it += 1;
+      //   console.log(it);
+      // });
+      Array.prototype.myMap = function (cb, _this) {
+        if (!this) {
+          throw new Error("this is null or not defined");
+        }
+        if (typeof cb !== "function") {
+          throw new Error(cb + " is not a funciton");
+        }
+        let arr = this;
+        let len = arr.length;
+        let k = 0;
+        let res = [];
+        while (k < len) {
+          res[k] = cb.call(_this, this[k], k, arr);
+          k++;
+        }
+        return res;
+      };
+      // arr.map((it, i, arr) => {
+      //   it += 1;
+      // });
+      // console.log(arr);
+      Array.prototype.filter = function (cb, _this) {
+        if (!this) {
+          throw new Error("this is null or not defined");
+        }
+        if (typeof cb !== "function") {
+          throw new Error(cb + " is not a funciton");
+        }
+        let arr = this;
+        let len = arr.length;
+        let k = 0;
+        let res = [];
+        while (k < len) {
+          cb.call(_this, this[k], k, arr) && res.push(this[k]);
+          k++;
+        }
+        return res;
+      };
+      // let res = arr.filter((it, i, arr) => {
+      //   return it === 1;
+      // });
+      // console.log(res);
+      Array.prototype.mySome = function (cb, _this) {
+        if (!this) {
+          throw new Error("this is null or not defined");
+        }
+        if (typeof cb !== "function") {
+          throw new Error(cb + " is not a funciton");
+        }
+        let arr = this;
+        let len = arr.length;
+        let k = 0;
+        while (k < len) {
+          if (cb.call(_this, this[k], k, arr)) {
+            return true;
+          }
+          k++;
+        }
+        return false;
+      };
+      // let res = arr.mySome((item, index, arr) => {
+      //   return item === 6;
+      // });
+      Array.prototype.myReduce = function (cb, ...args) {
+        if (!this) {
+          throw new Error("this is null or not defined");
+        }
+        if (typeof cb !== "function") {
+          throw new Error(cb + " is not a funciton");
+        }
+        let arr = this;
+
+        let preValue = args.length > 1 ? args[0] : this.shift();
+        let len = arr.length;
+        let k = 0;
+        while (k < len) {
+          preValue = cb(preValue, this[k], k, arr);
+          k++;
+        }
+        return preValue;
+      };
+      let res = arr.myReduce((pre, cur, index) => {
+        return pre + cur;
+      });
+      console.log(res);
+    </script>
+  </body>
+</html>

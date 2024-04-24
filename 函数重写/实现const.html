@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let myConst = function (target, value) {
+        window[target] = value;
+        Object.defineProperty(window, target, {
+          enumerable: true,
+          get() {
+            return value;
+          },
+          set(data) {
+            if (value !== data) {
+              throw new Error("this is a constant varible");
+            } else {
+              return value;
+            }
+          },
+          configurable: true,
+        });
+      };
+      myConst("a", { value: 1 });
+      a.value = 3;
+      console.log(a);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script type="module">
+      import MinHeap from "./MinHeap.js";
+      //给定一个非空的整数数组，返回其中出现频率前K高的元素
+      // 暴力求解
+      //   const topKFrequent = function (arr, k) {
+      //     const map = new Map();
+      //     arr.forEach((n) => {
+      //       map.set(n, map.has(n) ? map.get(n) + 1 : 1);
+      //     });
+      //     const list = Array.from(map).sort((a, b) => {
+      //       //   降序
+      //       // sort参数小于0则不交换，大于0则交换
+      //       // b[1]-a[1]大于0的话说明b[1]更大，因此进行交换，所有是降序排序
+      //       return b[1] - a[1];
+      //     });
+      //     console.log(list);
+      //     return list.slice(0, k).map((n) => n[0]);
+      //   };
+
+      // 堆求解
+      const topKFrequent = (arr, k) => {
+        const map = new Map();
+        // 统计次数
+        arr.forEach((item) => {
+          map.set(item, map.has(item) ? map.get(item) + 1 : 1);
+        });
+        const h = new MinHeap();
+        map.forEach((value, key) => {
+          h.insert({ value, key });
+          if (h.size() > k) {
+            h.pop();
+          }
+        });
+        return h.heap.map((item) => item.key);
+      };
+      console.log(topKFrequent([3, 0, 1, 0], 1));
+    </script>
+  </body>
+</html>

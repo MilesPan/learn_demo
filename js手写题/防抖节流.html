@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div id="layout">123123123</div>
+    <script>
+      // 1.防抖。连续执行一个函数时，只执行最后一次。
+      // function debounce(fn, delay = 100) {
+      //     let timer
+      //     return function () {
+      //         if (timer) {
+      //             clearTimeout(timer)
+      //         }
+      //         timer = setTimeout(() => {
+      //             fn.apply(this, arguments) // this指向调用debounce的对象
+      //         }, delay);
+      //     }
+      // }
+      const debounce1 = (fn, delay) => {
+        let timer;
+        let imediate = true;
+        return function (...args) {
+          if (imediate) {
+            fn.apply(this, args);
+            imediate = false;
+          }
+          if (timer) {
+            clearTimeout(timer);
+          }
+          timer = setTimeout(() => {
+            fn.apply(this, args);
+            imediate = true;
+          }, delay);
+        };
+      };
+      function debounce3(func, wait) {
+        // your code here
+        let timer;
+        return function (...args) {
+          function clear() {
+            console.log(timer);
+            clearTimeout(timer);
+            console.log(timer);
+            timer = null;
+          }
+          function run() {
+            timer = setTimeout(() => {
+              func.call(this, ...args);
+              clear();
+            }, wait);
+          }
+          if (!timer) {
+            run();
+          } else {
+            clear();
+            run();
+          }
+        };
+      }
+
+      window.addEventListener(
+        "resize",
+        debounce3((a) => {
+          console.log(this);
+          console.log(a);
+        }, 1000)
+      );
+
+      // 2.节流，在函数执行后的一段时间内，无论怎么重复触发都不会再执行。
+      // 也就是一段时间内只能执行一次
+      function throttle(fn, delay) {
+        let lock = false;
+        return function (...args) {
+          if (lock) return;
+          lock = true;
+          timer = setTimeout(() => {
+            fn.apply(this, args);
+            lock = false;
+          }, delay);
+        };
+      }
+      // window.addEventListener(
+      //     "resize",
+      //     throttle(() => {
+      //         console.log(111);
+      //     }, 100)
+      // );
+
+      // ---------------------------------------------------------------------
+      //   防抖
+      let debounce = function (fn, delay) {
+        let timer = null;
+        return function (...args) {
+          clearTimeout(timer);
+          timer = setTimeout(() => {
+            fn.apply(this, args);
+          }, delay);
+        };
+      };
+      let throttle2 = function (fn, delay) {
+        let lock = false;
+        return function (...args) {
+          if (!lock) {
+            lock = true;
+            fn.apply(this, args);
+            setTimeout(() => {
+              lock = false;
+            }, delay);
+          }
+        };
+      };
+      let count = 0;
+      var node = document.getElementById("layout");
+      function getUserAction(e) {
+        console.log(this, e); // 分别打印：node 这个节点 和 MouseEvent
+        node.innerHTML = count++;
+      }
+      // node.onmousemove = throttle(getUserAction, 1000);
+      node.addEventListener("mousemove", throttle2(getUserAction, 1000));
+      // node.addEventListener("mousemove", getUserAction);
+    </script>
+  </body>
+</html>

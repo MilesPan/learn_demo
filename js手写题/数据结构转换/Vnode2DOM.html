@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="app" id="app"></div>
+    <script>
+      const vnode = {
+        tag: "DIV",
+        attrs: {
+          id: "app",
+        },
+        children: [
+          {
+            tag: "SPAN",
+            children: [{ tag: "A", children: [] }],
+          },
+          {
+            tag: "SPAN",
+            children: [
+              { tag: "A", children: [] },
+              { tag: "A", children: [] },
+            ],
+          },
+        ],
+      };
+      function convert(vnode) {
+        if (typeof vnode === "number") {
+          vnode = String(vnode);
+        }
+        if (typeof vnode === "string") {
+          return document.createTextNode(vnode);
+        }
+        const dom = document.createElement(vnode.tag);
+        if (vnode.attrs) {
+          Object.keys(vnode.attrs).forEach((key) => {
+            const value = vnode.attrs[key];
+            dom.setAttribute(key, value);
+          });
+        }
+        vnode.children.forEach((child) => dom.appendChild(convert(child)));
+        return dom;
+      }
+      function convert2(vnode) {
+        if (typeof vnode === "number") {
+          vnode = String(vnode);
+        }
+        if (typeof vnode === "string") {
+          return document.createTextNode(vnode);
+        }
+        const dom = document.createElement(vnode.tag);
+        if (vnode.attrs) {
+          Object.keys(vnode.attrs).forEach((attr) => {
+            dom.setAttribute(attr, vnode.attrs[attr]);
+          });
+        }
+        vnode.children.forEach((child) => {
+          return dom.appendChild(convert2(child));
+        });
+        return dom;
+      }
+      document.getElementById("app").appendChild(convert2(vnode));
+      console.log(convert2(vnode));
+    </script>
+  </body>
+</html>

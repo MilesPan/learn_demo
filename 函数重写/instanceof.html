@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>instanceof</title>
+  </head>
+
+  <body>
+    <script>
+      function myInstanceof(instance, proto) {
+        while (instance) {
+          if (Object.getPrototypeOf(instance) === proto.prototype) {
+            return true;
+          }
+          // 原型链查找
+          instance = Object.getPrototypeOf(instance);
+        }
+        return false;
+      }
+      function myInstanceof2(offspring, ancetors) {
+        if (offspring === null) return false;
+        if (ancetors === null) throw new Error("Right-hand is not a object");
+        let p = offspring;
+        while (p.__proto__) {
+          if (p.__proto__ === ancetors.prototype) {
+            return true;
+          }
+          p = p.__proto__;
+        }
+        return false;
+      }
+      const fn = () => {};
+      console.log(fn instanceof Array);
+      console.log(myInstanceof2(fn, Array));
+      console.log(fn instanceof Function);
+      console.log(myInstanceof2(fn, Function));
+    </script>
+  </body>
+</html>

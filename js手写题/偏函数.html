@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const partial_es6 = (fn, ...args) => {
+        for (
+          let i = args.length;
+          i < fn.length;
+          i++ //补齐，跟fn的参数列表对应上
+        )
+          args.push(undefined);
+        console.log(args);
+        return (...remainArgs) => {
+          let j = 0;
+          args.forEach(
+            (arg, i) => arg === undefined && (args[i] = remainArgs[j++])
+          );
+          return fn(...args);
+        };
+      };
+      var partialAdd = partial_es6(add, 1, undefined);
+      console.log(partialAdd(2, 3));
+    </script>
+  </body>
+</html>

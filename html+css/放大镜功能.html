@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        width: 100%;
+        height: 100%;
+      }
+      .box {
+        display: flex;
+        width: 1200px;
+        margin: 0 auto;
+        margin-top: 20px;
+      }
+      #smallImg {
+        width: 100%;
+        height: 100%;
+      }
+      .small {
+        position: relative;
+        margin-right: 20px;
+        width: 384px;
+        height: 240px;
+        overflow: hidden;
+      }
+
+      .big {
+        /* display: none; */
+        position: relative;
+        width: 768px;
+        height: 460px;
+        overflow: hidden;
+      }
+      #bigImg {
+        position: absolute;
+        vertical-align: top;
+      }
+      .flag {
+        /* flagWidth:smallDivWidht = bigDivWidht:ImgWidth */
+        /* w:384 = 768:1920 */
+        /* w = 153.6 */
+        display: none;
+        width: 154px;
+        /* h:240 = 460:1200 */
+        height: 92px;
+        background-color: #3288e6;
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0.4;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <div class="small">
+        <img src="./bgc.jpg" alt="" id="smallImg" />
+        <div class="flag"></div>
+      </div>
+      <div class="big">
+        <img src="./bgc.jpg" id="bigImg" alt="" />
+      </div>
+    </div>
+
+    <script>
+      var sDiv = document.getElementsByClassName("small")[0];
+      var sImg = document.getElementById("smallImg");
+      var move = document.getElementsByClassName("flag")[0];
+      var bDiv = document.getElementsByClassName("big")[0];
+      var bImg = document.getElementById("bigImg");
+      //   控制flag出现隐藏;
+      sDiv.addEventListener("mouseenter", (e) => {
+        move.style.display = "block";
+        bDiv.style.display = "block";
+      });
+      sDiv.addEventListener("mouseleave", (e) => {
+        move.style.display = "none";
+        // bDiv.style.display = "none";
+      });
+      sDiv.addEventListener("mousemove", (e) => {
+        //   e.pageX表示鼠标到视口左边的距离
+        // left表示元素到视口左边的距离
+        var { left } = sDiv.getBoundingClientRect();
+        // x表示小方块的left值
+        // move.offsetWidth/2表示减掉move宽度的一半，不然是相对左边框移动的
+        var x = e.pageX - left - move.offsetWidth / 2;
+
+        var { top } = sDiv.getBoundingClientRect();
+        //y表示小方块的right值
+        var y = e.pageY - top - move.offsetHeight / 2;
+
+        let boundaryX = sDiv.getBoundingClientRect().width - move.offsetWidth;
+        let boundaryY = sDiv.getBoundingClientRect().height - move.offsetHeight;
+        // 判断小图标在边界情况
+        if (x < 0) {
+          x = 0;
+        } else if (x > boundaryX) {
+          x = boundaryX;
+        }
+        if (y < 0) {
+          y = 0;
+        } else if (y > boundaryY) {
+          y = boundaryY;
+        }
+        move.style.left = x + "px";
+        move.style.top = y + "px";
+
+        // 大图的位置移动
+        // 当小方块往右移动，其left增加，而大图的left应该是减小，因此是相反数
+        //  smallLeft : smallWidth = bigLeft : bigWidth
+        let bigLeft = (x * bImg.offsetWidth) / sImg.offsetWidth;
+        let bigTop = (y * bImg.offsetHeight) / sImg.offsetHeight;
+        console.log(bImg.offsetHeight, sImg.offsetHeight);
+        moveBig(-bigLeft, -bigTop);
+      });
+      const moveBig = (x, y) => {
+        bImg.style.left = x + "px";
+        bImg.style.top = y + "px";
+      };
+    </script>
+  </body>
+</html>

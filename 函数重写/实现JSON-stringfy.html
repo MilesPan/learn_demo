@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 将一个 JavaScript 值(对象或者数组)转换为一个 JSON 字符串。
+      function myStringfy(obj) {
+        let type = typeof obj;
+        // 基础数据类型(string,number,boolean,undefined,null,symbol,bigint)或者function
+        if (type !== "object") {
+          let result = obj;
+          // 特殊类型
+          if (Number.isNaN(obj) || obj === Infinity) {
+            // NaN和infinity时是返回null字符串
+            return "null";
+          } else if (
+            type === "function" ||
+            type === "undefined" ||
+            type === "symbol"
+          ) {
+            // function undefined symbol会转换成undefined
+            return undefine;
+          } else if (type === "string") {
+            result = '"' + obj + '"';
+          } else {
+            // number,boolean
+            return String(result);
+          }
+        }
+        // null,object
+        else {
+          if (obj === null) return "null";
+          //   toJSON() 方法可以将 Date 对象转换为字符串，并格式化为 JSON 数据格式
+          else if (obj.toJSON && typeof obj.toJSON === "function")
+            return myStringfy(obj.toJSON());
+          // 数组
+          else if (obj instanceof Array) {
+            let result = [];
+            obj.forEach((item, index) => {
+              if (
+                typeof item === "undefined" ||
+                typeof item === "function" ||
+                typeof item === "symbol"
+              ) {
+                result[index] = "null";
+              } else {
+                result[index] = myStringfy(item);
+              }
+            });
+            result = "[" + result + "]";
+            return result.replace(/'/g, '"');
+          } else {
+            //普通对象
+            /**
+             * 循环引用抛错(暂未检测，循环引用时，堆栈溢出)
+             * symbol key 忽略
+             * undefined、函数、symbol 为属性值，被忽略
+             */
+            let result = [];
+            Object.keys(obj).forEach((item, index) => {
+              if (typeof item !== "symbol") {
+                //key 如果是symbol对象，忽略
+                if (
+                  obj[item] !== undefined &&
+                  typeof obj[item] !== "function" &&
+                  typeof obj[item] !== "symbol"
+                ) {
+                  //键值如果是 undefined、函数、symbol 为属性值，忽略
+                  result.push('"' + item + '"' + ":" + myStringfy(obj[item]));
+                }
+              }
+            });
+            return ("{" + result + "}").replace(/'/g, '"');
+          }
+        }
+      }
+      let a = {
+        a: 1,
+        b: [1, 2, 3],
+        c: new Promise((res, rej) => {
+          res();
+        }),
+      };
+      console.log(myStringfy(a));
+      console.log(JSON.stringify(a));
+    </script>
+  </body>
+</html>

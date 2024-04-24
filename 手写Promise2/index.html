@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script type="module">
+      import Mypromise from "./Mypromise.js";
+      const p1 = new Mypromise((resolve, reject) => {
+        resolve("解决p1");
+        // reject("拒绝");
+      });
+      let p = p1.then(
+        (value) => {
+          return p;
+        },
+        () => {
+          return new Mypromise((resolve, reject) => {
+            resolve("pdyshuaib");
+          });
+        }
+      );
+      // .then(
+      //   (value) => {
+      //     console.log(value);
+      //     return "潘冬源";
+      //   },
+      //   (reason) => {
+      //     console.log(reason);
+      //     return "Reject潘";
+      //   }
+      // )
+      // .then(
+      //   (value) => {
+      //     console.log("success:", value);
+      //   },
+      //   (reason) => {
+      //     console.log("error:", reason);
+      //   }
+      // );
+      console.log("我的异步");
+      //   const p2 = new Promise((resolve, reject) => {
+      //     console.log("p2");
+      //     resolve("解决p2");
+      //     // reject("拒绝p2");
+      //   }).then(
+      //     (value) => {
+      //       console.log(value);
+      //     }
+      //     // ,
+      //     // (reason) => {
+      //     //   console.log(reason);
+      //     // }
+      //   );
+      // console.log(p1);
+      //   console.log(p2);
+      console.log("异步");
+    </script>
+  </body>
+</html>

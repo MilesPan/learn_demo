@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script type="module">
+      import MinHeap from "./MinHeap.js";
+      //   找到数组中第K个最大元素
+      // 就是初始化一个最小堆，将数组元素不停插入堆中，当堆的长度大于K时，就删除掉堆顶元素(即最小元素),最后得到的堆顶元素就是第K个最大元素
+      const findKthLargest = (arr, k) => {
+        const heap = new MinHeap();
+        arr.forEach((item) => {
+          heap.insert(item);
+          //   当堆的大小大于了k，就要删除堆顶(最小的元素)
+          if (heap.size() > k) {
+            heap.pop();
+          }
+          console.log(heap.heap);
+        });
+        return heap.peek();
+      };
+      console.log(findKthLargest([3, 2, 1, 5, 6, 4], 2));
+    </script>
+  </body>
+</html>

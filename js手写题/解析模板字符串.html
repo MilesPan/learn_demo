@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let render = (template, data) => {
+        let reg = /\$\{\{(\w+)\}\}/;
+        if (reg.test(template)) {
+          let temp = reg.exec(template)[1]; // name
+          template = template.replace(reg, data[temp]);
+          return render(template, data);
+        }
+        return template;
+      };
+      let render2 = (template, data) => {
+        let computed = template.replace(
+          /\$\{\{(\w+)\}\}/g,
+          function (match, key) {
+            return data[key];
+          }
+        );
+        return computed;
+      };
+      let template = "我是${{name}}，年龄${{age}}，性别${{sex}}";
+      let person = {
+        name: "布兰",
+        age: 12,
+      };
+      console.log(render(template, person)); // 我是布兰，年龄12，性别undefined
+      console.log(render2(template, person)); // 我是布兰，年龄12，性别undefined
+    </script>
+  </body>
+</html>

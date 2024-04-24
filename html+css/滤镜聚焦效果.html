@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      /* 字体 */
+      @import url("https://fonts.googleapis.com/css?family=Rajdhani:300&display=swap");
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        height: 100vh;
+        overflow: hidden;
+        background: url("./bgc.jpg") no-repeat;
+        background-position: center;
+        background-size: cover;
+        cursor: pointer;
+      }
+      .blur {
+        width: 100%;
+        height: 100%;
+        /* 模糊掉背后元素 */
+        backdrop-filter: blur(10px);
+      }
+      .focus {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        /* 复制一个背景图 */
+        background: url("./bgc.jpg") no-repeat;
+        background-size: cover;
+        background-position: center;
+        /* clip-path会裁剪带掉多余的，只会显示内部的 */
+        clip-path: circle(var(--r) at var(--x) var(--y));
+      }
+      h1 {
+        color: #fff;
+        font-size: 120px;
+        font-family: '"Rajdhani';
+        text-transform: uppercase;
+        pointer-events: none;
+        transform: translate(calc(var(--x) * 0.1), calc(var(--y) * 0.1));
+      }
+      /* 光环 */
+      .halo {
+        position: fixed;
+        top: calc(var(--r) * -1);
+        left: calc(var(--r) * -1);
+        width: calc(var(--r) * 2);
+        height: calc(var(--r) * 2);
+        border-radius: var(--r);
+        box-shadow: inset 0 0 20px #fff;
+        transform: translate(var(--x), var(--y));
+        /* transition-property: width, height, border-radius;
+        transition-duration: 0.5s; */
+        transition-property: top, left, width, height, border-radius, box-shadow;
+        transition-duration: 0.5s;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="blur">
+      <div class="focus">
+        <h1>There is a beauty</h1>
+      </div>
+      <div class="halo"></div>
+    </div>
+    <script>
+      const html = document.documentElement;
+      html.style.setProperty("--r", "180px");
+      html.addEventListener("mousemove", (e) => {
+        const { clientX, clientY } = e;
+        html.style.setProperty("--x", clientX + "px");
+        html.style.setProperty("--y", clientY + "px");
+      });
+      html.addEventListener("click", (e) => {
+        const r = html.style.getPropertyValue("--r");
+        html.style.setProperty("--r", r === "0px" ? "180px" : "0px");
+      });
+    </script>
+  </body>
+</html>

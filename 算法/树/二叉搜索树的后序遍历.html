@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 二叉搜索树
+      // 对于每个节点来说，左子树上所有结点的值均小于它的值； 若它的右子树不空，则右子树上所有结点的值均大于它的值
+      //  对[1,6,3,2,5]来说 ,最后一个元素5肯定是根节点元素,那么，前x个小于根节点的元素就一定是左子树上的，因此可以将数组分为两部分[1],[6,3,2]
+      //   再对这两部分进行递归检查，很明显 [6,3,2]中,[3,2]并不大于5因此不是一个二叉搜索树
+
+      //   解题：定义两个指针，i=0;j=length-1,当arr[i] < 根节点就将i右移,当arr[i]>根节点时，记录此时的下标为p,保证之后所有的值都>根节点的值，直到p = j
+      //   当p = j后表示 此时是符合的,再将[0,p-1]和[p,j-1]分别进行递归操作
+      var verifyPostorder = function (postorder) {
+        let rec = (i, j) => {
+          if (i >= j) return true;
+          let index = i;
+          // 所有左子树，找到所有小于根节点的值
+          while (postorder[index] < postorder[j]) {
+            index++;
+          }
+          // 右子树的起始位置
+          right = index;
+          // 遍历右子树，保证右子树的值都大于根节点
+          while (postorder[right] > postorder[j]) {
+            right++;
+          }
+          // 只有最后right等于j才说明当前是一个二叉搜索树
+          return right === j && rec(i, right - 1) && rec(right, j - 1);
+        };
+        return rec(0, postorder.length - 1);
+      };
+    </script>
+  </body>
+</html>

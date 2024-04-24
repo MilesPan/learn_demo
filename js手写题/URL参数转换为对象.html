@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // https://cn.bing.com/search?q=%E9%98%BF%E8%BE%BE&form=ANNTH1&refig=47457a93e485468f8d2dd71554e4a22c
+      let url =
+        "https://cn.bing.com/search?q=%E9%98%BF%E8%BE%BE&form=ANNTH1&refig=47457a93e485468f8d2dd71554e4a22c";
+      const convert = (url) => {
+        let params = url.split("?")[1].split("&");
+        let res = {};
+        params.forEach((item) => {
+          let pair = item.split("=");
+          res[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
+        });
+        return res;
+      };
+      console.log(convert(url));
+    </script>
+  </body>
+</html>
